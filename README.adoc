@@ -14,6 +14,7 @@
 :chapter-label:
 :doctype: book
 :lang: pt-BR
+//3+| mesclar linha tabela
 
 = Programação para Web II
 Fagno Alves Fonseca <fagno.fonseca@ifto.edu.br>
@@ -59,7 +60,12 @@ Então, a partir de agora, quando usarmos o termo cliente, geralmente não nos p
 .Teste [fonte: referência]
 image::cliente-faz.png[] 
 
+== GIF
 
+image::horizontal-scaling-small.gif[]
 
 //incluir link dentro do colchetes caso desejar [link=http://google.com]
 
+== VIDEO
+
+video::nsG9RlvYHgg&t=2s[youtube,width=640,height=480]
