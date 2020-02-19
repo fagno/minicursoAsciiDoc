@@ -1,5 +1,19 @@
 //caminho padrão para imagens
 :imagesdir: images
+:figure-caption: Figura
+:doctype: book
+
+//Estilo do Sumário
+:toc2: 
+//após os : insere o texto que deseja ser visível
+:toc-title: Sumário
+:figure-caption: Figura
+:numbered:
+:source-highlighter: highlightjs
+:icons: font
+:chapter-label:
+:doctype: book
+:lang: pt-BR
 
 = Programação para Web II
 Fagno Alves Fonseca <fagno.fonseca@ifto.edu.br>
@@ -25,7 +39,8 @@ Um browser permite ao usuário solicitar um recurso. O servidor pega a solicita�
 
 A menos que o recurso não esteja lá, erro "404 Not Found", a resposta que você recebe quando o servidor não pode encontrar o que ele acha que você solicitou.
 
-image:servidor-faz.png[]
+.Teste [fonte: referência]
+image::servidor-faz.png[]
 
 == O que um cliente web faz?
 
@@ -41,8 +56,10 @@ usuário.
 
 Então, a partir de agora, quando usarmos o termo cliente, geralmente não nos preocuparemos se estamos falando do usuário ou do browser. Em outras palavras, o cliente é o browser jazendo aquilo que o usuário solicitou.
 
-image:cliente-faz.png[] 
-:figure-caption: Figura
+.Teste [fonte: referência]
+image::cliente-faz.png[] 
+
+
 
 //incluir link dentro do colchetes caso desejar [link=http://google.com]
 
