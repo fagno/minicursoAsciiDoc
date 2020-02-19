@@ -1,61 +1,48 @@
-:revealjsdir: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0
-:revealjs_slideNumber: true
-:source-highlighter: highlightjs
-:icons: font
-:allow-uri-read:
-:imagesdir: /images
-:stylesheet: adoc-golo.css
-:numbered:
-:toc: left
-:toc-title: Sumário
-:toclevels: 5
+//caminho padrão para imagens
+:imagesdir: images
 
-ifdef::env-github[]
-//Exibe ícones para os blocos como NOTE e IMPORTANT no GitHub
+= Programação para Web II
+Fagno Alves Fonseca <fagno.fonseca@ifto.edu.br>
+Mestre em Modelagem Computacional de Sistemas – UFT.
 
-:caution-caption: :fire:
-:important-caption: :exclamation:
-:note-caption: :paperclip:
-:tip-caption: :bulb:
-:warning-caption: :warning:
-endif::[]
+== Aplicação WEB
 
-:chapter-label:
-:description: Elaboração de material didático multimídia com AsciiDoc, git e GitHub
-:listing-caption: Listagem
+Em uma aplicação na WEB a comunicação é feita através de protocolos populares (HTTP/FTP), que não exige ao usuário ou cliente qualquer sistema operacional em particular instalado em sua máquina.
+
+Tudo que os clientes necessitam é de um sistema operacional qualquer com um navegador WEB (browser).
+Isto traz diversas possibilidades dentro de uma ampla gama de aplicações baseadas na WEB.
+
+Você não precisará se prender aos problemas de distribuição presentes em toda aplicação standalone e irá distribuir sua aplicação a qualquer pessoa que possua um
+navegador WEB.
+
+== O que o seu servidor web faz?
+
+Uma aplicação WEB é um tipo de aplicação que faz uso da chamada estrutura Cliente-Servidor.
+
+Um servidor web recebe uma solicitação e devolve algo para o cliente.
+
+Um browser permite ao usuário solicitar um recurso. O servidor pega a solicitação, encontra o recurso e retorna com algo para o usuário. Algumas vezes este recurso é uma página HTML. Outras, uma figura. Ou um arquivo de som. Ou até mesmo um documento PDF. Não importa - o cliente solicita uma coisa (recurso) e o servidor a envia de volta.
+
+A menos que o recurso não esteja lá, erro "404 Not Found", a resposta que você recebe quando o servidor não pode encontrar o que ele acha que você solicitou.
+
+image:servidor-faz.png[]
+
+== O que um cliente web faz?
+
+Um cliente web permite ao usuário fazer solicitações ao servidor, exibindo para ele o resultado do pedido.
+
+Quando falamos em clientes, no entanto, geralmente
+queremos dizer ao mesmo tempo o usuário e o browser (ou
+um dos dois) .
+
+O browser é o software (como o Chrome ou o Firefox) que sabe se comunicar com o servidor. A outra grande tarefa do
+browser é interpretar o código HTML e exibir a página ao
+usuário.
+
+Então, a partir de agora, quando usarmos o termo cliente, geralmente não nos preocuparemos se estamos falando do usuário ou do browser. Em outras palavras, o cliente é o browser jazendo aquilo que o usuário solicitou.
+
+image:cliente-faz.png[] 
 :figure-caption: Figura
 
-= Elaboração de material didático multimídia com AsciiDoc, git e GitHub
+//incluir link dentro do colchetes caso desejar [link=http://google.com]
 
-== Instalação das ferramentas
-
-Execute o script link:ferramentas.sh[ferramentas.sh] em um terminal com sistema Ubuntu ou qualquer derivado de Debian: 
-
-[source, bash]
-----
-sh ferramentas.sh
-----
-
-Se sua distribuição for antiga ou não for 64 bits, pode ser que a instalação do Visual Studio code não funcione. Se ocorrer erro, pode editar o script acima, apagar as linhas 3 até 7 e executar novamente. Em seguida, baixe o Visual Studio Code manualmente em http://code.visualstudio.com
-
-Crie uma conta no GitHub em https://github.com/signup. O nome de usuário se torna o link para sua conta pública, como http://github.com/manoelcampos. Por isso, escolha o nome apropriadamente.
-
-Qualquer dúvida, podem entrar em contato diretamente comigo.
-Para qualquer alteração em um projeto que você desejar enviar para o GitHub a partir da sua máquina, você precisará informar nome de usuário e senha. Isso se tornará um processo bastante chato e que toma tempo. Para evitar isso, na nossa máquina pessoal, podemos configurar a autenticação por meio de um par de chaves pública/privada. Para isto, siga o tutorial disponível https://youtu.be/Qp0lDxgoQE0[aqui].
-
-ifdef::backend-pdf[]
-include::comandos/README.adoc[]
-endif::[]
-
-ifndef::backend-pdf[]
-== Comandos AsciiDoc
-
-link:comandos[Um resumo dos comandos AsciiDoc está disponível aqui.]
-endif::[]
-
-
-== Referências
-
-- https://asciidoctor.org/docs/asciidoc-writers-guide/[AsciiDoc Official Writer’s Guide]
-- https://asciidoctor.org/docs/[Toda a Documentação oficial do AsciiDoc]
-- https://github.com/darshandsoni/asciidoctor-skins[Temas em CSS]
