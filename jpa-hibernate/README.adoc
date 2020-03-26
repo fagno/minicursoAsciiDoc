@@ -111,13 +111,13 @@ Outras propriedades do Hibernate são inseridas no arquivos conforme descrito ab
 - hibernate.format_sql: indica se os comandos SQL exibidos na console devem ser formatados (facilita a compreensão, mas pode gerar textos longos na saída) 
 - hibernate.hbm2ddl.auto: cria ou atualiza automaticamente a estrutura das tabelas no banco de dados.
 
-== Gerando a tabela no banco de dados
+=== Gerando a tabela no banco de dados
 
 Para gerar a tabela no banco de dados, basta apenas criar um EntityManagerFactory, que todas as tabelas mapeadas serão criadas ou atualizadas.
 
 Abaixo, é apresentado o método main() que foi definido para carregar o arquivo de persistence. O método createEntityManagerFactory() da classe Persistence retorna uma instância de EntityManagerFactory.
 
-.Entidade Pessoa
+.Gerando Tabelas
 [source, java]
 ----
 import javax.persistence.Persistence;
@@ -130,6 +130,32 @@ public class CriaTabelas {
 ----
 
 IMPORTANT: No parâmetro do método createEntityManagerFactory("aulawebii") foi informado o name definido no arquivo 'persistence.xml'. 
+
+== EntityManager
+
+Um EntityManager é responsável por gerenciar entidades no contexto de
+persistência. Através dos métodos dessa interface, é possível persistir, pesquisar e excluir objetos do banco de dados.
+
+Qualquer projeto web que usa JPA necessita de apenas uma instância de EntityManagerFactory, que pode ser criada durante a inicialização da aplicação. Esta única instância será utilizada para criar um EntityManager através do método criarEntityManager().
+
+A classe JpaUtil foi definida para complementar o exemplo anterior e substituir a classe 'CriaTabelas'. 
+
+.Classe que cria um EntityManagerFactory e um EntityManager
+[source, java]
+----
+include::../JpaUtil.java[]
+----
+
+=== Definindo o DAO
+
+Criaremos a classe PessoaDAO para acesso aos dados da entidade Pessoa. Observe que no exemplo a seguir, a classe utilizar a classe 'JpaUtil' para criar um EntityManager. 
+
+.Classe PessoaDao
+[source, java]
+----
+include::../PessoDao.java[]
+----
+
 
 == Referências
 
