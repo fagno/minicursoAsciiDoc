@@ -1,0 +1,104 @@
+//caminho padrão para imagens
+:imagesdir: images
+:figure-caption: Figura
+:doctype: book
+//:include: codigo
+
+//gera apresentacao
+//pode se baixar os arquivos e add no diretório
+:revealjsdir: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0
+
+//GERAR ARQUIVOS
+//make slides
+//make ebook
+
+//Estilo do Sumário
+:toc2: 
+//após os : insere o texto que deseja ser visível
+:toc-title: Sumário
+:figure-caption: Figura
+//numerar titulos
+:numbered:
+:source-highlighter: highlightjs
+:icons: font
+:chapter-label:
+:doctype: book
+:lang: pt-BR
+//3+| mesclar linha tabela
+
+= Programação para Web II
+Fagno Alves Fonseca <fagno.fonseca@ifto.edu.br>
+Mestre em Modelagem Computacional de Sistemas – UFT.
+
+== Java Persistence API e Frameworks ORM
+
+A Java Persistence API (JPA) é uma especificação para persistência de dados em Java, que oferece uma API de mapeamento objeto-relacional e soluções para integrar persistência em sistemas corporativos. Ela foi criada com o intuito de ter uma padronização no desenvolvimento de soluções com ORM em Java.
+
+Mapeamento objeto relacional (object-relational mapping, ORM) é uma técnica de programação para conversão de dados entre banco
+de dados relacionais e linguagens de programação orientada a objetos.
+
+=== Hibernate
+
+Em nossos projetos estaremos utilizando a JPA com Hibernate. O Hibernate é um framework ORM para persistência de dados, sendo uma das referências entre os desenvolvedores. 
+
+=== Mapeamento básico
+
+Para efetuar o mapeamento objeto/relacional de uma classe, precisamos inserir a anotação @Entity em uma classe. 
+
+.Criando uma entidade
+[source, java]
+----
+import javax.persistence.Entity;
+
+@Entity
+public class Pessoa{
+}
+----
+
+A anotação @Entity diz que a classe é uma entidade, que representa uma tabela do banco de dados.
+
+Precisamos inserir também as anotações @Id, que declara o identificador no banco de dados e a anotação @GeneratedValue, que determina esse identificador sendo do tipo auto-incremento, neste caso, o atributo 'id'.
+
+.Entidade Pessoa
+[source, java]
+----
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "tb_pessoa")
+public class Pessoa implements Serializable{
+
+    @Id
+    @GeneratedValue
+    private Long id;
+    private String nome;
+
+    //getters e setters
+
+}
+----
+
+A classe possui a anotação @Table(name = "tb_pessoa"), que define o nome da tabela ao persistir os dados no banco. Caso você não utilize a anotação a tabela terá o mesmo nome da classe, ou seja, 'Pessoa'.
+
+Em JPA é uma boa pratica sempre implementar a interface Serializable. Quando o objeto é serializado, todas as variáveis de instância referentes a classe deste objeto serão serializadas. A serialização significa salvar o estado atual dos objetos em arquivos em formato binário para o seu computador, sendo assim esse estado poderá ser recuperado posteriormente recriando o objeto em memória assim como ele estava no momento da sua serialização.
+
+=== O arquivo persistence.xml
+
+O persistence.xml é um arquivo de configuração padrão da JPA. Ele deve ser
+criado no diretório META-INF da aplicação ou do módulo que contém os beans
+de entidade.
+
+.Persistence.xml
+[source, xml]
+----
+include::persistence.xml[]
+----
+
+== Referências
+
+http://www.vraptor.org/pt/docs/guia-de-1-minuto/
+https://cafe.algaworks.com/livro-jpa-e-hibernate/
