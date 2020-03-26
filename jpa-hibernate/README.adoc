@@ -88,8 +88,7 @@ Em JPA é uma boa pratica sempre implementar a interface Serializable. Quando o 
 === O arquivo persistence.xml
 
 O persistence.xml é um arquivo de configuração padrão da JPA. Ele deve ser
-criado no diretório META-INF da aplicação ou do módulo que contém os beans
-de entidade.
+criado no diretório src/main/resources/META-INF da aplicação.
 
 .Persistence.xml
 [source, xml]
@@ -97,7 +96,42 @@ de entidade.
 include::../persistence.xml[]
 ----
 
+No arquivo 'persistence.xml' é indicado o nome da unidade de persistência e o o provider diz qual é a implementação que será usada como provedor de persistência.
+
+As informações de conexão com o banco de dados são definidas utilizando as principais propriedades abaixo:
+
+- javax.persistence.jdbc.url: descrição da URL de conexão com o banco de dados
+- javax.persistence.jdbc.driver: nome completo da classe do driver JDBC
+- javax.persistence.jdbc.user: nome do usuário do banco de dados senha do usuário do banco de dados
+
+Outras propriedades do Hibernate são inseridas no arquivos conforme descrito abaixo.
+
+- hibernate.dialect: dialeto a ser usado na construção de comandos SQL
+- hibernate.show_sql: informa se os comandos SQL devem ser exibidos na console (importante para debug, mas deve ser desabilitado em ambiente de produção)
+- hibernate.format_sql: indica se os comandos SQL exibidos na console devem ser formatados (facilita a compreensão, mas pode gerar textos longos na saída) 
+- hibernate.hbm2ddl.auto: cria ou atualiza automaticamente a estrutura das tabelas no banco de dados.
+
+== Gerando a tabela no banco de dados
+
+Para gerar a tabela no banco de dados, basta apenas criar um EntityManagerFactory, que todas as tabelas mapeadas serão criadas ou atualizadas.
+
+Abaixo, é apresentado o método main() que foi definido para carregar o arquivo de persistence. O método createEntityManagerFactory() da classe Persistence retorna uma instância de EntityManagerFactory.
+
+.Entidade Pessoa
+[source, java]
+----
+import javax.persistence.Persistence;
+
+public class CriaTabelas {
+    public static void main(String[] args) {
+        Persistence.createEntityManagerFactory("aulawebii");
+    }
+}
+----
+
+IMPORTANT: No parâmetro do método createEntityManagerFactory("aulawebii") foi informado o name definido no arquivo 'persistence.xml'. 
+
 == Referências
 
-http://www.vraptor.org/pt/docs/guia-de-1-minuto/
-https://cafe.algaworks.com/livro-jpa-e-hibernate/
+1. http://www.vraptor.org/pt/docs/guia-de-1-minuto/
+2. https://cafe.algaworks.com/livro-jpa-e-hibernate/
