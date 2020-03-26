@@ -19,26 +19,26 @@ public class PessoaDao{
     }
     
     public Pessoa pessoa(int id){
-        return manager.find(Pessoa.class, id);
+        return em.find(Pessoa.class, id);
     }
     
     public List<Pessoa> Pessoas(){
-        Query query = manager.createQuery("from Pessoa");
+        Query query = em.createQuery("from Pessoa");
         return query.getResultList();
     } 
 
     public void remove(Pessoa pessoa){
-        manager.getTransaction().begin();
-        Pessoa p = manager.find(Pessoa.class, this);
-        manager.remove(Pessoa);
-        manager.getTransaction().commit();
+        em.getTransaction().begin();
+        Pessoa p = em.find(Pessoa.class, this);
+        em.remove(Pessoa);
+        em.getTransaction().commit();
     }
 
     public void update(Pessoa pessoa){
-        manager.getTransaction().begin();
-        Pessoa p = manager.find(Pessoa.class, this);
-        manager.merge(Pessoa);
-        manager.getTransaction().commit();
+        em.getTransaction().begin();
+        Pessoa p = em.find(Pessoa.class, this);
+        em.merge(Pessoa);
+        em.getTransaction().commit();
     }
 
 
