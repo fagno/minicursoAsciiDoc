@@ -29,6 +29,8 @@
 Fagno Alves Fonseca <fagno.fonseca@ifto.edu.br>
 Mestre em Modelagem Computacional de Sistemas – UFT.
 
+IMPORTANT: MATERIAL EM CONSTRUÇÃO
+
 == Aplicação WEB
 
 Em uma aplicação na WEB a comunicação é feita através de protocolos populares (HTTP/FTP), que não exige ao usuário ou cliente qualquer sistema operacional em particular instalado em sua máquina.
@@ -66,4 +68,7 @@ usuário.
 
 Então, a partir de agora, quando usarmos o termo cliente, geralmente não nos preocuparemos se estamos falando do usuário ou do browser. Em outras palavras, o cliente é o browser jazendo aquilo que o usuário solicitou.
 
-EM CONSTRUÇÂO!
+== Referências
+
+1. BASHAM, Bryan; SIERRA, Kathy; BASTES, Bert. Use a cabeça! Servlets &
+JSP. Alta Book Editora-Starlin Alta Con Com Ltda, 2008.
