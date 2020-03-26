@@ -44,7 +44,7 @@ Em nossos projetos estaremos utilizando a JPA com Hibernate. O Hibernate é um f
 
 No vídeo é apresentado como criar um novo projeto web com maven e também como criar o arquivo persistence.xml que é detalhado no tópico 1.5.
 
-video::eNS2xu51g4g[youtube,width=640,height=480]
+video::zKO4t_P2ePs[youtube,width=640,height=480]
 
 === Dependências
 
