@@ -40,6 +40,12 @@ de dados relacionais e linguagens de programação orientada a objetos.
 
 Em nossos projetos estaremos utilizando a JPA com Hibernate. O Hibernate é um framework ORM para persistência de dados, sendo uma das referências entre os desenvolvedores. 
 
+=== Criando um projeto web e definindo o arquivo persistence.xml
+
+No vídeo é apresentado como criar um novo projeto web com maven e também como criar o arquivo persistence.xml que é detalhado no tópico 1.5.
+
+video::eNS2xu51g4g[youtube,width=640,height=480]
+
 === Dependências
 
 Após criar o projeto web com maven, adicione ao arquivo pom.xml as dependências necessárias do Mysql e Hibernate.

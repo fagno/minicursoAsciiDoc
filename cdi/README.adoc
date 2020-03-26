@@ -29,4 +29,41 @@
 Fagno Alves Fonseca <fagno.fonseca@ifto.edu.br>
 Mestre em Modelagem Computacional de Sistemas – UFT.
 
+
+== Injeção de dependências e Contexto - CDI
+
+CDI, acrônimo de Contexts and Dependency Injection, é uma especificação do Java EE responsável por fazer o controle da injeção de dependências nas aplicações. 
+
+O CDI define contextos para especificar e gerenciar os ciclos de vida do bean gerenciado e usa injeção de dependência para satisfazer as dependências declaradas de uma maneira segura e dinâmica. Injeção de dependência é tornar disponível a instância de uma classe quando for necessário. Desta forma, passamos a responsabilidade de criar instâncias para o container. 
+
+Para injetar uma dependência você deve usar a anotação @Inject. Esta anotação indica que queremos injeção de dependências nos pontos em que for utilizada.
+
+== Utilizando CDI em seu projeto web
+
+Iremos complementar o exemplo utilizado no capítulo anterior 'JPA e Hibernate'. Vamos alterar o projeto para que o mesmo utilize CDI.
+
+Vamos iniciar efetuando alteração na classe 'PessoaDao'. Observe que usamos a anotação @Inject do pacote 'javax.inject.Inject' para que o container faça a injeção de um EntityManager. Observe que não estamos utilizando a classe 'JpaUtil' conforme era feito no exemplo anterior.
+
+.Classe PessoDao com CDI
+[source, java]
+----
+package com.mycompany.projetoexemplo.model.dao;
+
+import javax.persistence.EntityManager;
+import javax.inject.Inject;
+
+@Dependent
+public class ClienteDAO {
+    
+    @Inject
+    EntityManager manager;
+
+}
+----
+
+
+
+
+// no Java EE 7, iniciou-se um amadurecimento na integração entre as tecnologias do Java EE, o que permite que qualquer bean seja nomeado através da anotação @Named, dessa forma os beans anotados são gerenciados pelo CDI permitindo a injeção de dependência entre si, isso engloba controllers JSF que podem ser adicionados ao contexto do CDI através da anotação @Named.
+
 IMPORTANT: MATERIAL EM CONSTRUÇÃO
