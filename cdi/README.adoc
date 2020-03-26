@@ -113,3 +113,9 @@ Nosso controller terá uma instância de 'PessoaDao' anotado com o @Inject. Obse
 ----
 include::../codigo-2/PessoasController.java[]
 ----
+
+== Referências
+
+1. http://www.vraptor.org/pt/docs/guia-de-1-minuto/
+1. https://blog.caelum.com.br/use-cdi-no-seu-proximo-projeto-java/
+1. https://blog.caelum.com.br/customizando-a-producao-de-dependencias-no-cdi/
