@@ -40,6 +40,26 @@ de dados relacionais e linguagens de programação orientada a objetos.
 
 Em nossos projetos estaremos utilizando a JPA com Hibernate. O Hibernate é um framework ORM para persistência de dados, sendo uma das referências entre os desenvolvedores. 
 
+=== Dependências
+
+Após criar o projeto web com maven, adicione ao arquivo pom.xml as dependências necessárias do Mysql e Hibernate.
+
+.Dependências do Mysql e Hibernate
+[source, xml]
+----
+<dependency>
+    <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.48</version>
+</dependency>
+        
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-entitymanager</artifactId>
+    <version>4.3.1.Final</version>
+</dependency>
+----
+
 === Mapeamento básico
 
 Para efetuar o mapeamento objeto/relacional de uma classe, precisamos inserir a anotação @Entity em uma classe. 
