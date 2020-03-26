@@ -93,7 +93,7 @@ criado no diretório src/main/resources/META-INF da aplicação.
 .Persistence.xml
 [source, xml]
 ----
-include::../persistence.xml[]
+include::../codigo/persistence.xml[]
 ----
 
 No arquivo 'persistence.xml' é indicado o nome da unidade de persistência e o o provider diz qual é a implementação que será usada como provedor de persistência.
@@ -143,7 +143,7 @@ A classe JpaUtil foi definida para complementar o exemplo anterior e substituir 
 .Classe que cria um EntityManagerFactory e um EntityManager
 [source, java]
 ----
-include::../JpaUtil.java[]
+include::../codigo/JpaUtil.java[]
 ----
 
 === Definindo o DAO
@@ -153,9 +153,10 @@ Criaremos a classe PessoaDAO para acesso aos dados da entidade Pessoa. Observe q
 .Classe PessoaDao
 [source, java]
 ----
-include::../PessoDao.java[]
+include::../codigo/PessoaDao.java[]
 ----
 
+Coomplemente o projeto anterior do tópico sobre Vraptor, e faça as adequações necessária para utilzação da JPA.
 
 == Referências
 

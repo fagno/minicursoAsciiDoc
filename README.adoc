@@ -68,7 +68,7 @@ Mestre em Modelagem Computacional de Sistemas – UFT.
 // .Título Código
 // [source, java]
 // ----
-// include::Quadrado.java[]
+// include::Teclado.java[]
 // ----
 
 
