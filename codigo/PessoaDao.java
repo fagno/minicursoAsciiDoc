@@ -29,15 +29,14 @@ public class PessoaDao{
 
     public void remove(Pessoa pessoa){
         em.getTransaction().begin();
-        Pessoa p = em.find(Pessoa.class, this);
-        em.remove(Pessoa);
+        Pessoa p = em.find(Pessoa.class, pessoa.getId());
+        em.remove(p);
         em.getTransaction().commit();
     }
 
     public void update(Pessoa pessoa){
         em.getTransaction().begin();
-        Pessoa p = em.find(Pessoa.class, this);
-        em.merge(Pessoa);
+        em.merge(pessoa);
         em.getTransaction().commit();
     }
 
