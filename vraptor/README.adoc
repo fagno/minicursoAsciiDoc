@@ -30,3 +30,7 @@ Fagno Alves Fonseca <fagno.fonseca@ifto.edu.br>
 Mestre em Modelagem Computacional de Sistemas – UFT.
 
 IMPORTANT: MATERIAL EM CONSTRUÇÃO
+
+== Referências
+
+1. http://www.vraptor.org/pt/docs/guia-de-1-minuto/
