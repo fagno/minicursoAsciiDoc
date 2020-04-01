@@ -54,7 +54,7 @@ WildFly 8. Em nossos exemplos vamos utilizar o Glassfish 4.
 
 IMPORTANT: É necessário alterar a versão do Guava na pasta do servidor.
 
-Para alterar a versão da dependência do Guava no servidor Glassfish, acesse o diretório do mesmo em glassfish4/glassfish/modules. Você deve excluir o arquivo existente do Guava e adicionar a mesma versão utilizada pelo Vraptor, disponível aqui para link:../arquivos/guava-15.0.jar/[download].
+Para alterar a versão da dependência do Guava no servidor Glassfish, acesse o diretório do mesmo em glassfish4/glassfish/modules. Você deve excluir o arquivo existente do Guava e adicionar a mesma versão utilizada pelo Vraptor, disponível link:https://github.com/fagno/pwebii-ifto/raw/master/arquivos/guava-15.0.jar/[aqui].
 
 == Referências
 
