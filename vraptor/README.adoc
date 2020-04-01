@@ -35,7 +35,7 @@ Mestre em Modelagem Computacional de Sistemas – UFT.
 
 O VRaptor É um framework MVC opensource que traz alta produtividade para um desenvolvimento Java Web rápido e fácil com CDI. 
 
-=== Depedências
+=== Depedência
 
 Para adicionar o Vraptor no seu projeto web com maven é necessário incluir a depência do framework atualmente em na versão 4 conforme a seguir.
 
@@ -49,10 +49,10 @@ Para adicionar o Vraptor no seu projeto web com maven é necessário incluir a d
 </dependency>
 ----
 
-Na link:http://www.vraptor.org/pt/[documentação] do Vraptor indica que os Servidores de Aplicações já testados e suportados são Glassfish 4 e 
+Na link:http://www.vraptor.org/pt/docs/dependencias-e-pre-requisitos/[documentação] do Vraptor indica que os Servidores de Aplicações já testados e suportados são Glassfish 4 e 
 WildFly 8. Em nossos exemplos vamos utilizar o Glassfish 4.
 
-IMPORTANT: É necessário alterar a versão do Guava na servidor Glassfish.
+IMPORTANT: É necessário alterar a versão da dependência do Guava.jar na servidor Glassfish.
 
 Para alterar a versão da dependência do Guava no servidor Glassfish, acesse o diretório do mesmo em glassfish4/glassfish/modules. Você deve excluir o arquivo existente do Guava e adicionar a mesma versão utilizada pelo Vraptor, disponível link:https://github.com/fagno/pwebii-ifto/raw/master/arquivos/guava-15.0.jar/[aqui].
 
@@ -117,6 +117,30 @@ Outro exemplo que podemos definir é o método form(). Ao adicionar o método no
     }
 ...
 ----
+
+Para visualizar a lista de pessoas através da requisição à URI "http://localhost:8080/projetoexemplo/pessoas/lista" você deve definiar seu arquivo lista.jsp conforme a seguir.
+
+.lista.jsp
+[source, xml]
+----
+...
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Lista de Pessoas</title>
+</head>
+<body>
+    <c:forEach items="${pessoaList}" var="pessoa">
+        ${pessoa.nome} 
+    </c:forEach>
+</body>
+...
+----
+
+O retorno dos métodos do controller são exportados para a view. Descrevo dois pontos importantes que precisam ser destados.
+
+IMPORTANT: No caso do nosso método lista(), o retorno é uma lista de pessoas, sendo assim, a variável acessível no jsp será ${pessoaLista}.
+
+IMPORTANT: Se o retorno for um tipo simples, o nome da variável exportada será o nome da classe com a primeira letra minúscula, neste caso, a variável na jsp será ${pessoa}. 
 
 == Referências
 
