@@ -31,7 +31,30 @@ link:https://fagno.github.io/pwebii-ifto/[HOME]
 Fagno Alves Fonseca <fagno.fonseca@ifto.edu.br>
 Mestre em Modelagem Computacional de Sistemas – UFT.
 
-IMPORTANT: MATERIAL EM CONSTRUÇÃO
+== Vraptor
+
+O VRaptor É um framework MVC opensource que traz alta produtividade para um desenvolvimento Java Web rápido e fácil com CDI. 
+
+== Depedências
+
+Para adicionar o Vraptor no seu projeto web com maven é necessário incluir a depência do framework atualmente em na versão 4 conforme a seguir.
+
+.Dependência do Vraptor 4
+[source, xml]
+----
+<dependency>
+    <groupId>br.com.caelum</groupId>
+    <artifactId>vraptor</artifactId>
+    <version>4.2.0-RC5</version>
+</dependency>
+----
+
+Na link:http://www.vraptor.org/pt/[documentação] do Vraptor indica que os Servidores de Aplicações já testados e suportados são Glassfish 4 e 
+WildFly 8. Em nossos exemplos vamos utilizar o Glassfish 4.
+
+IMPORTANT: É necessário alterar a versão do Guava na pasta do servidor.
+
+Para alterar a versão da dependência do Guava no servidor Glassfish, acesse o diretório do mesmo em glassfish4/glassfish/modules. Você deve excluir o arquivo existente do Guava e adicionar a mesma versão utilizada pelo Vraptor, disponível aqui para link:../arquivos/guava-15.0.jar/[download].
 
 == Referências
 
