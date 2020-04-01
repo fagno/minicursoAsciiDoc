@@ -35,7 +35,7 @@ Mestre em Modelagem Computacional de Sistemas – UFT.
 
 O VRaptor É um framework MVC opensource que traz alta produtividade para um desenvolvimento Java Web rápido e fácil com CDI. 
 
-== Depedências
+=== Depedências
 
 Para adicionar o Vraptor no seu projeto web com maven é necessário incluir a depência do framework atualmente em na versão 4 conforme a seguir.
 
@@ -52,9 +52,71 @@ Para adicionar o Vraptor no seu projeto web com maven é necessário incluir a d
 Na link:http://www.vraptor.org/pt/[documentação] do Vraptor indica que os Servidores de Aplicações já testados e suportados são Glassfish 4 e 
 WildFly 8. Em nossos exemplos vamos utilizar o Glassfish 4.
 
-IMPORTANT: É necessário alterar a versão do Guava na pasta do servidor.
+IMPORTANT: É necessário alterar a versão do Guava na servidor Glassfish.
 
 Para alterar a versão da dependência do Guava no servidor Glassfish, acesse o diretório do mesmo em glassfish4/glassfish/modules. Você deve excluir o arquivo existente do Guava e adicionar a mesma versão utilizada pelo Vraptor, disponível link:https://github.com/fagno/pwebii-ifto/raw/master/arquivos/guava-15.0.jar/[aqui].
+
+=== Definindo um Controller
+
+Controller são classes contendo a lógica de negócio do seu sistema. É responsável por receber todas as requisições do usuário. Uma camada intermediária entre a camada de apresentação e a lógica.
+
+Imagine que temos uma classe Pessoa, deste modo, vamos criar uma nova classe para representar o Controller e tratar as requisições web. Essa classe vai ser o Controller de pessoas. 
+
+A nova classe deve ser definida com o nome PessoasController. Para indicar que uma classe é um controller, você precisa anotá-la com a anotação @Controller conforme o exemplo a seguir.
+
+.Criando um Controller
+[source, java]
+----
+import br.com.caelum.vraptor.Controller;
+
+@Controller
+public class PessoasController{
+    ...
+} 
+----
+
+Anotando seu controller com @Controller, todos os seus métodos públicos serão acessíveis pela web. No exemplo a seguir, uma requisição à URI "http://localhost:8080/projetoexemplo/pessoas/lista" redirecionará para o método lista(). Ou seja, a convenção para a criação de URIs é /<nome_do_controller>/<nome_do_metodo>. 
+
+.PessoasController
+[source, java]
+----
+package com.mycompany.projetoexemplo.controller;
+
+import br.com.caelum.vraptor.Controller;
+import com.mycompany.projetoexemplo.model.Pessoa;
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
+public class PessoasController {
+
+    public List<Pessoa> lista(){
+        List<Pessoa> pessoas = new ArrayList();
+        pessoas.add(new Pessoa("Pessoa 1"));
+        pessoas.add(new Pessoa("Pessoa 2"));
+        return pessoas;
+    }    
+
+}
+----
+
+Ao terminar a execução do método, o VRaptor fará o dispatch da requisição para o JSP no diretório do seu projeto em /WEB-INF/jsp/pessoas/lista.jsp. Ou seja, a convenção para a view padrão é /WEB-INF/jsp/<nome_do_controller>/<nome_do_metodo>.jsp conforme figura a seguir.
+
+.Conversão para a view
+image::vraptor-web-inf.png/[]
+
+Ao executar o projeto acima, a saída será a lista de pessoas conforme definido no projeto.
+
+Outro exemplo que podemos definir é o método form(). Ao adicionar o método no controller conforme o exemplo a seguir, e criar o form.jsp em /WEB-INF/jsp/pessoas/form.jsp assim como feito com o lista.jsp na figura 1, podemos acessar o formulário através da URI "http://localhost:8080/projetoexemplo/pessoas/form".
+
+.PessoasController
+[source, java]
+----
+...
+    public void form(){
+    }
+...
+----
 
 == Referências
 
