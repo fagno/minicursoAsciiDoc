@@ -103,6 +103,7 @@ public class Pessoa implements Serializable{
     @GeneratedValue
     private Long id;
     private String nome;
+    private int idade;
 
     //getters e setters
 
@@ -185,6 +186,172 @@ include::../codigo/PessoaDao.java[]
 ----
 
 Coomplemente o projeto anterior do tópico sobre Vraptor, e faça as adequações necessária para utilzação da JPA.
+
+== Mapeamento com associações
+
+=== um-para-um
+
+O relacionamento um-para-um, também conhecido como one-to-one. Neste relacionamento teremos os atributos das entidades relacionadas que serão persistidas na mesma tabela. Como exemplo, iremos utilizar uma classe Pessoa que tem um relacionamento One-to-One com a classe endereço.
+
+.OneToOne
+image::one-to-one.png[]
+
+A implementação do exemplo acima é descrito a seguir. Na classe Pessoa, adicionamos o atributo endereco e e mapeamos com @OneToOne. Adicionamos também a anotação @JoinColumn para definir o nome da coluna que faz referência ao id da tabela tb_endereco na tabela tb_pessoa.
+
+Por padrão, o nome da coluna é definido com o nome do atributo da associação, mais underscore, mais o nome do atributo do identificador da entidade destino caso você não utilize o @JoinColumn.
+
+.Classe Pessoa
+[source, java]
+----
+...
+@Entity
+@Table(name = "tb_pessoa")
+public class Pessoa{
+
+    @Id
+    @GeneratedValue
+    private int codigo;
+    
+    private String nome;
+
+    private int idade;
+
+    @OneToOne
+    @JoinColumn(name = "id_endereco")
+    private Endereco endereco;
+
+    //getters e setters
+
+}
+...
+----
+
+.Classe Endereco
+[source, java]
+----
+...
+@Entity
+@Table(name = "tb_endereco")
+public class Endereco{
+
+    @Id
+    @GeneratedValue
+    private int codigo;
+    
+    private String logradouro;
+    
+    private String bairro;
+    
+    private String cep;
+
+    //getters e setters
+    
+}
+...
+----
+
+IMPORTANT: Não esqueça que precisamos de uma instância persistida de Endereço para atribuir a Pessoa. 
+
+==== Associação bidirecional
+
+A associação do exemplo entre pessoa e endereço é unidirecional, ou seja, podemos obter o endereço a partir de uma pessoa, mas não conseguimos obter a pessoa a partir de um endereco. 
+
+Para tornar a associação um-para-um bidirecional, precisamos apenas incluir o atributo de Pessoa na classe Endereco e mapearmos com @OneToOne usando o atributo mappedBy.
+
+.Classe Endereco
+[source, java]
+----
+...
+@Entity
+@Table(name = "tb_endereco")
+public class Endereco{
+
+    @Id
+    @GeneratedValue
+    private int codigo;
+    
+    private String logradouro;
+    
+    private String bairro;
+    
+    private String cep;
+
+    @OneToOne(mappedBy="endereco")
+    private Pessoa pessoa;
+
+    //getters e setters
+    
+}
+...
+----
+
+IMPORTANT: O valor do mappedBy deve ser igual ao nome do atributo de endereço definido na classe Pessoa.
+
+Em relacionamentos OneToOne, qualquer um dos lados pode ser o dominante. O mappedBy deve ser colocado na classe que não é dona do relacionamento, ou seja, o lado fraco. Neste exemplo, definimos Pessoa como classe dominante. Na tabela tb_endereco não terá id da tabela tb_pessoa.
+
+=== um-para-muitos
+
+Neste exemplo, vamos alterar nosso relacionamento de modo que uma pessoa tem vários endereços e um endereço só tem uma pessoa. A anotação @OneToMany deve ser utilizada para mapear coleções, neste caso, inserida do lado não dominante (fraco).
+
+.OneToMany
+image::many-to-one.png[]
+
+.Classe Pessoa
+[source, java]
+----
+...
+@Entity
+@Table(name = "tb_pessoa")
+public class Pessoa{
+
+    @Id
+    @GeneratedValue
+    private int codigo;
+    
+    private String nome;
+
+    private int idade;
+
+    @OneToMany(mappedBy = "pessoa")
+    private List<Endereco> enderecos;
+
+    //getters e setters
+
+}
+...
+----
+
+.Classe Endereco
+[source, java]
+----
+...
+@Entity
+@Table(name = "tb_endereco")
+public class Endereco{
+
+    @Id
+    @GeneratedValue
+    private int codigo;
+    
+    private String logradouro;
+    
+    private String bairro;
+    
+    private String cep;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pessoa")
+    private Pessoa pessoa;
+
+    //getters e setters
+    
+}
+...
+----
+
+=== muitos-para-muitos
+
+IMPORTANT: EM CONSTRUÇÃO
 
 == Referências
 
