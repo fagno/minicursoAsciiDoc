@@ -136,11 +136,62 @@ Para visualizar a lista de pessoas através da requisição à URI "http://local
 ...
 ----
 
-O retorno dos métodos do controller são exportados para a view. Descrevo dois pontos importantes que precisam ser destados.
+O retorno dos métodos do controller são exportados para a view. Ressalto dois pontos importantes que precisam ser destacados.
 
 IMPORTANT: No caso do nosso método lista(), o retorno é uma lista de pessoas, sendo assim, a variável acessível no jsp será ${pessoaLista}.
 
 IMPORTANT: Se o retorno for um tipo simples, o nome da variável exportada será o nome da classe com a primeira letra minúscula, neste caso, a variável na jsp será ${pessoa}. 
+
+=== Definindo o PessoaDao
+
+No exemplo, utilizamos uma lista de pessoas definida dentro do métodos lista(). Agora vamos definir um Dao para para acesso aos dados das pessoas no banco de dados. Iremos utilizar uma conexão JDBC, pois nosso objetivo nete capítulo é conhecer as funcionalidades do Vraptor.
+
+.PessoaDao.java
+[source, java]
+----
+include::../codigo/PessoaDaoIntro.java[]
+----
+
+Para  efetuar a conexão com o banco de ados, vamos utilizar a classe Conexão conforme exemplo a seguir.
+
+.Conexao.java
+[source, java]
+----
+include::../codigo/Conexao.java[]
+----
+
+=== Implementando ações de CRUD no controller
+
+Com nossa classe PessoaDao pronta podemos definir as operações necessárias no controlador com todas as operações de CRUD.
+
+.Conexao.java
+[source, java]
+----
+include::../codigo/PessoasController.java[]
+----
+
+Para adicionar um novo registro, precisamos definir o atributo "name" dos nossos inputs para pessoa.id, pessoa.nome, pessoa.idade. Nosso método salvar() no PessoasController() possui como parametro o nome pessoa, deste modo, o VRaptor vai popular os seus campos nome e idade, usando os seus setters da classe Pessoa, com os valores digitados nos inputs.
+Então, usando os nomes corretamente nos inputs do form, basta definir o método salvar() conforme definido anteriormente no controller.
+
+IMPORTANT: ${linkTo[PessoasController].salvar} aponta para o método salvar no PessoaController.
+ 
+.Form.jsp
+[source, jsp]
+----
+include::../codigo/formsemvalue.jsp[]
+----
+
+Depois de adicionar um registro no banco estamos carregando a listagem de objetos utilizando o método redirectTo(), apontando o this por parâmetro que faz referência ao próprio PessoaController para chamar o método lista() logo a seguir. Fazemos o mesmo, também no método excluir após a exclusão.
+
+Para editar uma pessoa estamos utilizando o form.jsp que é utilizado para adicionar. O método editar no euxilia neste processo, pois ao receber o Id do objeto a ser editado, carregamos os dados do mesmo no banco e depois fazemos a inclusão desse objeto no form.jsp utilizando o método include(). Este método é responsável por preencher o form.jsp com os dados da pessoa a ser editada.
+
+Observe no código a seguir, que os dados do objeto serão carregados devido o atributo "value" dos inputs do formulário conforme o exemplo.
+
+.Form.jsp
+[source, jsp]
+----
+include::../codigo/form.jsp[]
+----
 
 == Referências
 
