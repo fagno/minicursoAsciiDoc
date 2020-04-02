@@ -60,7 +60,23 @@ Para alterar a versão da dependência do Guava no servidor Glassfish, acesse o 
 
 Controller são classes contendo a lógica de negócio do seu sistema. É responsável por receber todas as requisições do usuário. Uma camada intermediária entre a camada de apresentação e a lógica.
 
-Imagine que temos uma classe Pessoa, deste modo, vamos criar uma nova classe para representar o Controller e tratar as requisições web. Essa classe vai ser o Controller de pessoas. 
+Antes de criar nosso controller, vamos definir uma entidade para representar uma pessoa.
+
+.Entidade Pessoa
+[source, java]
+----
+public class Pessoa{
+
+    private Long id;
+    private String nome;
+    private int idade;
+
+    //getters e setters
+
+}
+----
+
+Após criada a classe Pessoa, vamos criar uma nova classe para representar o Controller e tratar as requisições web. Essa classe vai ser o Controller de pessoas. 
 
 A nova classe deve ser definida com o nome PessoasController. Para indicar que uma classe é um controller, você precisa anotá-la com a anotação @Controller conforme o exemplo a seguir.
 
