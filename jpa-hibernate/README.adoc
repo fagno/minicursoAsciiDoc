@@ -223,7 +223,6 @@ public class Pessoa{
     //getters e setters
 
 }
-...
 ----
 
 .Classe Endereco
@@ -247,7 +246,6 @@ public class Endereco{
     //getters e setters
     
 }
-...
 ----
 
 IMPORTANT: Não esqueça que precisamos de uma instância persistida de Endereço para atribuir a Pessoa. 
@@ -282,7 +280,6 @@ public class Endereco{
     //getters e setters
     
 }
-...
 ----
 
 IMPORTANT: O valor do mappedBy deve ser igual ao nome do atributo de endereço definido na classe Pessoa.
@@ -291,7 +288,7 @@ Em relacionamentos OneToOne, qualquer um dos lados pode ser o dominante. O mappe
 
 === um-para-muitos
 
-Neste exemplo, vamos alterar nosso relacionamento de modo que uma pessoa tem vários endereços e um endereço só tem uma pessoa. A anotação @OneToMany deve ser utilizada para mapear coleções, neste caso, inserida do lado não dominante (fraco).
+Neste exemplo, vamos alterar nosso relacionamento para que uma pessoa tenha vários endereços e um endereço só tenha uma pessoa. A anotação @OneToMany deve ser utilizada para mapear coleções, neste caso, inserida do lado não dominante (fraco).
 
 .OneToMany
 image::many-to-one.png[]
@@ -318,7 +315,6 @@ public class Pessoa{
     //getters e setters
 
 }
-...
 ----
 
 .Classe Endereco
@@ -346,7 +342,6 @@ public class Endereco{
     //getters e setters
     
 }
-...
 ----
 
 === muitos-para-muitos
