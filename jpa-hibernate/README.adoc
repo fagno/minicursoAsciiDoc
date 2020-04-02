@@ -193,7 +193,7 @@ Coomplemente o projeto anterior do tópico sobre Vraptor, e faça as adequaçõe
 
 O relacionamento um-para-um, também conhecido como one-to-one. Neste relacionamento teremos os atributos das entidades relacionadas que serão persistidas na mesma tabela. Como exemplo, iremos utilizar uma classe Pessoa que tem um relacionamento One-to-One com a classe endereço.
 
-.OneToOne
+.@OneToOne
 image::one-to-one.png[]
 
 A implementação do exemplo acima é descrito a seguir. Na classe Pessoa, adicionamos o atributo endereco e e mapeamos com @OneToOne. Adicionamos também a anotação @JoinColumn para definir o nome da coluna que faz referência ao id da tabela tb_endereco na tabela tb_pessoa.
@@ -254,6 +254,9 @@ IMPORTANT: Não esqueça que precisamos de uma instância persistida de Endereç
 
 A associação do exemplo entre pessoa e endereço é unidirecional, ou seja, podemos obter o endereço a partir de uma pessoa, mas não conseguimos obter a pessoa a partir de um endereco. 
 
+.@OneToOne bidirecional
+image::one-to-one-bi.png[]
+
 Para tornar a associação um-para-um bidirecional, precisamos apenas incluir o atributo de Pessoa na classe Endereco e mapearmos com @OneToOne usando o atributo mappedBy.
 
 .Classe Endereco
@@ -290,8 +293,8 @@ Em relacionamentos OneToOne, qualquer um dos lados pode ser o dominante. O mappe
 
 Neste exemplo, vamos alterar nosso relacionamento para que uma pessoa tenha vários endereços e um endereço só tenha uma pessoa. A anotação @OneToMany deve ser utilizada para mapear coleções, neste caso, inserida do lado não dominante (fraco).
 
-.OneToMany
-image::many-to-one.png[]
+.@OneToMany bidirecional
+image::one-to-many-bi.png[]
 
 .Classe Pessoa
 [source, java]
