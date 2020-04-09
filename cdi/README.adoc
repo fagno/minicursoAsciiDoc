@@ -99,7 +99,7 @@ que esteja anotado com @Produces para retornar uma instância dessa dependência
 .Produces
 [source, java]
 ----
-include::../codigo-2/JpaUtil.java[]
+include::../codigo/JpaUtil-2.java[]
 ----
 
 Outros dois métodos close() são definidos na classe com parâmetros diferentes, ou seja, callback @Disposes. A anotação @Disposes indica quando a instância do EntityManagerFactory e EntityManager pode ser encerrada.
@@ -113,7 +113,7 @@ Nosso controller terá uma instância de 'PessoaDao' anotado com o @Inject. Obse
 .Controller PessoaController
 [source, java]
 ----
-include::../codigo-2/PessoasController.java[]
+include::../codigo/PessoasController-2.java[]
 ----
 
 == Referências

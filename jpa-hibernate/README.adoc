@@ -101,7 +101,7 @@ public class Pessoa implements Serializable{
 
     @Id
     @GeneratedValue
-    private Long id;
+    private int id;
     private String nome;
     private int idade;
 
@@ -210,7 +210,7 @@ public class Pessoa{
 
     @Id
     @GeneratedValue
-    private int codigo;
+    private int id;
     
     private String nome;
 
@@ -235,7 +235,7 @@ public class Endereco{
 
     @Id
     @GeneratedValue
-    private int codigo;
+    private int id;
     
     private String logradouro;
     
@@ -269,7 +269,7 @@ public class Endereco{
 
     @Id
     @GeneratedValue
-    private int codigo;
+    private int id;
     
     private String logradouro;
     
@@ -306,7 +306,7 @@ public class Pessoa{
 
     @Id
     @GeneratedValue
-    private int codigo;
+    private int id;
     
     private String nome;
 
@@ -330,7 +330,7 @@ public class Endereco{
 
     @Id
     @GeneratedValue
-    private int codigo;
+    private int id;
     
     private String logradouro;
     
@@ -349,7 +349,273 @@ public class Endereco{
 
 === muitos-para-muitos
 
-IMPORTANT: EM CONSTRUÇÃO
+Neste exemplo, vamos alterar nosso relacionamento para que uma pessoa tenha vários endereços e um endereço tenha várias pessoas. Usamos a anotação @ManyToMany para mapear a propriedade de coleção. 
+
+No relacionamento muitos para muitos é criada uma tabela de associação com os nomes das entidades relacionadas, separados por underscore, com duas colunas, com nomes dos identificadores gerados automaticamente.
+
+Podemos customizar o nome da tabela de associação e das colunas com a
+anotação @JoinTable, conforme exeplo a seguir.
+ 
+.@OneToMany bidirecional
+image::many-to-many.png[]
+
+.Classe Pessoa
+[source, java]
+----
+...
+@Entity
+public class Pessoa implements Serializable{
+    
+    @Id
+    @GeneratedValue
+    private int id;
+
+    private String nome;
+
+    private int idade;
+    
+    @ManyToMany
+    @JoinTable(name = "pessoas_enderecos",
+    joinColumns = @JoinColumn(name = "id_pessoa"),
+    inverseJoinColumns = @JoinColumn(name = "id_endereco"))
+    private List<Endereco> enderecos=new ArrayList();
+
+    //getters e setters
+
+...
+----
+
+No exemplo acima, foi definido com a anotação @JoinTable o nome da tabela que será gerada e também com a anotação @JoinColumn o nome das colunas que representam os identificadores da associação entre pessoa e endereço.
+
+Na classe endereço vamos utilizar a anotação @ManyToMany, porém apontando apenas o "mappedby" conforme a seguir.
+
+
+.Classe Endereco
+[source, java]
+----
+...
+@Entity
+public class Endereco implements Serializable{
+    
+    @Id
+    @GeneratedValue
+    private int id;
+    
+    private String logradouro;
+    
+    private String bairro;
+    
+    private String cep;
+   
+    @ManyToMany(mappedBy = "enderecos")
+    private List<Pessoa> pessoas=new ArrayList();
+
+    //getters e setters
+
+...
+----
+
+Um nova tabela será gerada de acordo a nomeclatura definida nas anotações e apresentada na figura a seguir.
+
+.tabela pessoas_enderecos
+image::tabela-n-to-n.png[]
+
+== Mapeamento com Herança
+
+A JPA define 3 formas de se fazer o mapeamento de herança:
+
+• Tabela Única por Hierarquia de Classes (single table)
+• Uma tabela para cada classe da hierarquia (joined)
+• Uma tabela para cada classe concreta (table per class)
+
+=== Tabela Única por Hierarquia de Classes
+
+Essa estratégia de mapeamento define uma unica tabela para toda a hierarquia de classes. Por exemplo, considere a Classe Pessoa como Superclasse, e outras 2 classes PessoaFisica e PessoaJuridica estendendo de Pessoa, teremos uma tabela com os dados de toda a hierarquia. 
+
+Pontos importantes:
+
+- As classes filhas precisam aceitar valores nulos. A falta da constraint NOT NULL pode ser um problema.
+
+A identificaçao de quem é Pessoa Física ou Jurídica é feita por um atributo chamado discriminator, ou seja, um campo que identifica PessoaFisica(PF) e PessoaJuridica (PJ). 
+
+
+.Classe Pessoa
+[source, java]
+----
+...
+@Entity
+@Table(name = "tb_pessoa")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo")
+public abstract class Pessoa {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String nome;
+
+    //getters e setters
+
+...
+----
+
+A estratégia é definida com a anotação @Inheritance, neste caso SINGLE_TABLE. A anotação @DiscriminatorColumn foi usada para definir o nome da coluna do discriminator e identificar se é PF ou PJ.
+
+A seguir vamos definir a classe PessoaFisica com a anotação @DiscriminatorValue indicando o discriminador como "F".
+
+.Classe PessoaFisica
+[source, java]
+----
+...
+@Entity
+@DiscriminatorValue("F")
+public class PessoaFisica extends Pessoa{
+
+    private String cpf;
+
+    //getters e setters
+
+...
+----
+
+A seguir vamos definir a classe PessoaJuridica com a anotação @DiscriminatorValue indicando o discriminador como "J".
+
+.Classe PessoaJuridica
+[source, java]
+----
+...
+@Entity
+@DiscriminatorValue("J")
+public class PessoaJuridica extends Pessoa{
+
+    private String cnpj;
+
+    //getters e setters
+
+...
+----
+
+=== Uma tabela para cada classe da hierarquia
+
+Essa estratégia de mapeamento define uma tabela para cada classe da hierarquia. No nosso exemplo, teremos uma tabelas para a classe Pessoa, uma tabela para PessoaFisica e uma para PessoaJuridica.
+
+Alteramos o exemplo anterior, definir a estratégia de herança para JOINED na entidade Pessoa.
+
+.Classe Pessoa
+[source, java]
+----
+...
+@Entity
+@Table(name = "tbpessoa")
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Pessoa {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String nome;
+
+    //getters e setters
+
+...
+----
+
+Nas subclasses, vamos adicionar a anotação @PrimaryKeyJoinColumn para informar o nome da coluna que faz referência à superclasse.
+
+.Classe PessoaFisica
+[source, java]
+----
+...
+@Entity
+@Table(name = "tb_pessoafisica")
+@PrimaryKeyJoinColumn(name = "id_pessoa")
+public class PessoaFisica extends Pessoa{
+
+    private String cpf;
+
+    //getters e setters
+
+...
+----
+
+.Classe PessoaJuridica
+[source, java]
+----
+...
+@Entity
+@Table(name = "tb_pessoajuridica")
+@PrimaryKeyJoinColumn(name = "id_pessoa")
+public class PessoaJuridica extends Pessoa{
+
+    private String cnpj;
+
+    //getters e setters
+
+...
+----
+
+=== Uma tabela para cada classe concreta
+
+Essa estratégia de mapeamento define tabelas apenas para classes concretas (subclasses). Cada tabela deve possuir as propriedades da subclasse incluindo as da superclasse.
+
+Para utilizar essa forma de mapeamento, devemos anotar a classe conforme a seguir.
+
+.Classe Pessoa
+[source, java]
+----
+...
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Pessoa {
+
+    @Id
+    @GeneratedValue(generator = "inc")
+    @GenericGenerator(name = "inc", strategy = "increment")    
+    private Long id;
+
+    private String nome;
+
+    //getters e setters
+
+...
+----
+
+Tivemos que mudar a estratégia de geração de identificadores. Não podemos usar a geração automática de chaves nativa do banco de dados.
+
+Nas subclasses, definimos conforme a seguir.
+
+.Classe PessoaFisica
+[source, java]
+----
+...
+@Entity
+@Table(name = "tb_pessoafisica")
+public class PessoaFisica extends Pessoa{
+
+    private String cpf;
+
+    //getters e setters
+
+...
+----
+
+.Classe PessoaJuridica
+[source, java]
+----
+...
+@Entity
+@Table(name = "tb_pessoajuridica")
+public class PessoaJuridica extends Pessoa{
+
+    private String cnpj;
+
+    //getters e setters
+
+...
+----
+
 
 == Referências
 
