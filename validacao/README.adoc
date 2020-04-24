@@ -168,10 +168,13 @@ public class PessoasController{
 
 Podemos alterar o método add do validator no exemplo anterior conforme a seguir.
 
+[source, java]
+----
 //mensagem internacionalizada
 validator.add(new SimpleMessage("Nome", "obrigatorio"));
 validator.addIf(condicao,new I18nMessage("Nome","obrigatorio"));
 validator.ensure(condicao,new SimpleMessage("Nome", "obrigatorio"))
+----
 
 IMPORTANT: Para utilizar estes métodos devemos definir um novo arquivo .properties chamado messages.properties.
 
