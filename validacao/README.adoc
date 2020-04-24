@@ -1,0 +1,196 @@
+//caminho padrão para imagens
+:imagesdir: ../images
+:figure-caption: Figura
+:doctype: book
+
+//gera apresentacao
+//pode se baixar os arquivos e add no diretório
+:revealjsdir: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0
+
+//GERAR ARQUIVOS
+//make slides
+//make ebook
+
+//Estilo do Sumário
+:toc2: 
+//após os : insere o texto que deseja ser visível
+:toc-title: Sumário
+:figure-caption: Figura
+//numerar titulos
+:numbered:
+:source-highlighter: highlightjs
+:icons: font
+:chapter-label:
+:doctype: book
+:lang: pt-BR
+//3+| mesclar linha tabela
+
+link:https://fagno.github.io/pwebii-ifto/[HOME]
+
+= Programação para Web II
+Fagno Alves Fonseca <fagno.fonseca@ifto.edu.br>
+Mestre em Modelagem Computacional de Sistemas – UFT.
+
+== Validação
+
+A validação do VRaptor tira proveito do Bean Validation, especificação presente no Java EE 7 que permite validar nosso modelo baseado em anotações. 
+
+O Validator é um componente do VRaptor utilizado para validações. Cada classe que formos salvar no banco vai ter alguns campos obrigatórios e, em todos eles, vamos fazer uma validação com mensagens semelhantes.
+
+Semelhante ao uso do Result, declaramos e anotamos com @Inject uma instância do Validator conforme a seguir.
+
+.Controller
+[source, java]
+----
+import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.Validator;
+
+@Controller
+public class PessoasController{
+   
+    @Inject
+    Result result;
+
+    @Inject
+    Validator validator;
+
+}
+----
+
+Antes de apresentar como fazer a validação das requisições em nosso controller, iremos anotar nossa entidade Pessoa com algumas anotações necessárias. Anotamos os atributos da nossa classe com a anotação @NotNull, que indica ser um campo obrigatório. 
+
+.Entidade Pessoa
+[source, java]
+----
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "tb_pessoa")
+public class Pessoa implements Serializable{
+
+    @Id
+    @GeneratedValue
+    private int id;
+
+    @NotNull(message = "{obrigatorio}")
+    private String nome;
+    
+    @NotNull(message = "{obrigatorio}")
+    private int idade;
+
+    //getters e setters
+
+}
+----
+
+Para customizar nossas mensagens do Bean Validation, basta criar um arquivo ValidationMessages.properties no seu classpath em /src/main/resources.
+
+Considerando o exemplo anterior, o arquivo poderia ter a seguinte estrutura para customizar as mensagens.
+
+.ValidationMessages.properties
+[source, properties]
+----
+obrigatorio = é um campo obrigatório
+----
+
+Observe que o valor contido em message={} na classe Pessoa definido anteriormente, faz referência a mensagem que definimos no arquivo properties. Veja que foi adicionado parâmetros afim de deixar nossas mensagens mais dinâmicas e reaproveitáveis. 
+
+Desta forma, em qualquer entidade que tenha campo obrigatório, usamos o parâmetro "obrigatorio" que faz referência a mensagem "é um campo obrigatório."
+
+Após definido nossas anotações e o arquivo ValidationMessages, voltamos ao nosso controller.
+
+.Controller
+[source, java]
+----
+import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.Validator;
+
+@Controller
+public class PessoasController{
+   
+    @Inject
+    Result result;
+
+    @Inject
+    Validator validator;
+
+    public void salvar(Pessoa pessoa){
+        
+        validator.validate(pessoa);
+        validator.onErrorRedirectTo(this).form();
+
+        ...
+        
+    }
+
+}
+----
+
+Utilizamos o método validade da classe Validator para validar o objeto a ser persistido no banco de dados. E para redirecionar para o formulário, fazemos algo bem parecido com os redirecionamentos do Result. No Validator falamos que, se houver erros, queremos redirecionar para o formulário.
+
+Nada que está abaixo da linha do onErrorRedirectTo será executado
+caso exista algum erro de validação.
+
+O validator possui outros métodos de validação, sendo o mais simples o add, no entanto, podemos também usar os métodos addIf que adiciona a mensagem se a condição for verdadeira e o ensure que adiciona se a condição for falsa. A seguir apresentamos um exemplo.
+
+
+.Controller
+[source, java]
+----
+import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.Validator;
+
+@Controller
+public class PessoasController{
+   
+    @Inject
+    Result result;
+
+    @Inject
+    Validator validator;
+
+    public void salvar(Pessoa pessoa){
+        
+        //mensagem simples
+        validator.add(new SimpleMessage("Nome", "O nome deve ser preenchido."));
+        validator.onErrorRedirectTo(this).form();
+
+        ...
+    }    
+
+}
+----
+
+Podemos alterar o método add do validator no exemplo anterior conforme a seguir.
+
+//mensagem internacionalizada
+validator.add(new SimpleMessage("Nome", "obrigatorio"));
+validator.addIf(condicao,new I18nMessage("Nome","obrigatorio"));
+validator.ensure(condicao,new SimpleMessage("Nome", "obrigatorio"))
+
+IMPORTANT: Para utilizar estes métodos devemos definir um novo arquivo .properties chamado messages.properties.
+
+=== Mostrando os erros de validação na JSP
+
+Quando existem erros de validação, o VRaptor coloca um atributo na requisição chamado errors contendo a lista de erros. Essa lista é representada por items chave-valor, onde temos:
+
+category: representa o caminho do atributo que originou o erro, cujo valor é uma convenção para objeto.atributo
+message: representa a mensagem padrão da API do Bean Validation, normalmente um sufixo como: “deve estar no futuro”, “não pode ser nulo”, etc.
+
+E na view você pode imprimir:
+
+[source, jsp]
+----
+<c:forEach var="error" items="${errors}">
+    ${error.category} - ${error.message}<br />
+</c:forEach>
+----
+
+== Referências
+
+1. https://www.vraptor.org/pt/docs/validacao/#validao

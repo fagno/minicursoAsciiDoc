@@ -34,6 +34,7 @@ Mestre em Modelagem Computacional de Sistemas – UFT.
 1. link:vraptor/[Vraptor]
 1. link:jpa-hibernate/[JPA e Hibernate]
 1. link:cdi/[Injeção de dependências e Contexto]
+1. link:validacao/[Validação]
 1. link:bootstrap/[Bootstrap]
 
 
